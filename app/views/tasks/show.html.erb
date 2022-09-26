@@ -1,4 +1,4 @@
-<%= link_to "Projects", projects_path %>
+<%= link_to "Project", project_path(@project) %>
 
 <p id="notice"><%= notice %></p>
 
@@ -27,5 +27,5 @@
   <%= @task.created_at %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<td><%= link_to 'Edit', edit_project_task_path(@task.project, @task) %></td> |
+<%= link_to 'Back', project_tasks_path(@task.project) %>

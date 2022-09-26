@@ -2,7 +2,8 @@
 
 <%= link_to "Project", @project %>
 
-<h1>New Task</h1>
+<h1>Editing Task</h1>
 
 <%= render 'form', task: @task %>
-<%= link_to 'Back', project_tasks_path(@project) %>
+
+<%= link_to 'Back', projects_path %>
