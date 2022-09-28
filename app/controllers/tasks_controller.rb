@@ -7,8 +7,6 @@ class TasksController < ApplicationController
   end
 
   def new
-    # I create Task object here because view need to access errors coming from Task validations
-    # Later on it passes task: @task when rendering form inside tasks/new.html.erb
     @task = Task.new
   end
 
