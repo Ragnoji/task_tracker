@@ -1,8 +1,7 @@
-<%= link_to "Tasks", tasks_path %>
-
 <h1>Editing Project</h1>
 
 <%= render 'form', project: @project %>
 
 <%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', url_for(controller: 'tasks',
+                            action: 'index') %>
