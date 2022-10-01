@@ -8,7 +8,7 @@ class Task < ApplicationRecord
   private
 
   def deadline_possibility
-    return if (created_at || Time.now.to_datetime) < deadline_at
+    return if (created_at || Time.now) < deadline_at
 
     errors.add(:deadline_at, "must be after creation time")
   end
