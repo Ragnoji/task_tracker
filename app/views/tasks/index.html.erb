@@ -5,10 +5,12 @@
 <table>
   <thead>
   <tr>
-    <th>Title</th>
+    <th><%= link_to "Title", :sort => params[:sort] != "title asc" ? "title asc" : "title desc"%></th>
     <th>Description</th>
-    <th>Requested at</th>
-    <th>Deadline until</th>
+    <th><%= link_to "Requested at",
+                    :sort => params[:sort] != "created_at desc" ? "created_at desc" : "created_at asc"%></th>
+    <th><%= link_to "Deadline until",
+                    :sort => params[:sort] != "deadline_at desc" ? "deadline_at desc" : "deadline_at asc"%></th>
     <th>Project ID</th>
     <th colspan="3"></th>
   </tr>
@@ -19,7 +21,7 @@
     <tr>
       <td><%= task.title %></td>
       <td><%= task.description %></td>
-      <td><%= task.created_at %></td>
+      <td><%= time_ago_in_words(task.created_at) %> ago</td>
       <td><%= task.deadline_at %></td>
       <td><%= task.project.name %></td>
       <td><%= link_to 'Show', url_for([@project, task]) %></td>
@@ -29,6 +31,8 @@
   <% end %>
   </tbody>
 </table>
+
+<%= paginate @tasks %>
 
 <br>
 
