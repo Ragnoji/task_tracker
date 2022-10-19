@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   before_action :authenticate_current_user!, only: %i[show]
+
   def show
   end
 
@@ -17,6 +18,17 @@ class SessionsController < ApplicationController
     else
       @user = User.new
       @user.errors.add :base, "Wrong email or password"
+      render :new
+    end
+  end
+
+  def logout
+    if current_user.present?
+      session.delete(:current_user_id)
+      redirect_to request.referer
+    else
+      @user = User.new
+      @user.errors.add :base, "You can't log out unless you are authenticated"
       render :new
     end
   end
