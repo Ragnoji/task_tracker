@@ -1,0 +1,34 @@
+<%= link_to "Task", project_task_path(@project, @task) %>
+
+<h1>Comments</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Added at</th>
+    <th>Task ID</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @comments.each do |comment| %>
+    <tr>
+      <td><%= comment.title %></td>
+      <td><%= comment.description %></td>
+      <td><%= comment.created_at %></td>
+      <td><%= @task.title %></td>
+      <td><%= link_to 'Show', project_task_comment_path(@project, @task, comment) %></td>
+      <td><%= link_to 'Edit', edit_project_task_comment_path(@project, @task, comment) %></td>
+      <td><%= link_to 'Destroy', project_task_comment_path(@project, @task, comment),
+                      method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New comment', new_project_task_comment_path(@project, @task) %>

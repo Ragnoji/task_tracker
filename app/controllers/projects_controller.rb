@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    authorize! @project
   end
 
   # POST /projects
@@ -39,6 +40,8 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
+    authorize! @project
+
     if @project.update(project_params)
       redirect_to @project, notice: "Project was successfully updated."
     else
@@ -48,6 +51,8 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
+    authorize! @project
+
     @project.destroy
     redirect_to projects_url, notice: "Project was successfully destroyed."
   end

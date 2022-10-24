@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_23_163202) do
+ActiveRecord::Schema.define(version: 2022_10_24_214954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.bigint "task_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_comments_on_task_id"
+  end
 
   create_table "project_memberships", force: :cascade do |t|
     t.bigint "project_id"
@@ -40,6 +49,7 @@ ActiveRecord::Schema.define(version: 2022_10_23_163202) do
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "state", default: "Not started", null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
@@ -54,5 +64,6 @@ ActiveRecord::Schema.define(version: 2022_10_23_163202) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "comments", "tasks"
   add_foreign_key "tasks", "projects"
 end

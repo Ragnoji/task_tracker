@@ -1,5 +1,12 @@
 class Task < ApplicationRecord
+  extend Enumerize
+
+  STATES = ["Not started", "Started", "Finished"].freeze
+
+  enumerize :state, in: STATES
+
   belongs_to :project
+  has_many :comments, dependent: :destroy
 
   validates :title, presence: true
   validates :deadline_at, presence: true

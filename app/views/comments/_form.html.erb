@@ -1,10 +1,10 @@
-<%= form_with(model: task, url: [project, task]) do |form| %>
-  <% if task.errors.any? %>
+<%= form_with(model: comment, url: [project, task, comment]) do |form| %>
+  <% if comment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
-        <% task.errors.each do |error| %>
+        <% comment.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -22,13 +22,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :deadline_at %>
-    <%= form.datetime_select :deadline_at %>
-  </div>
-
-  <div class="field">
-    <%= form.label :project_id %>
-    <%= form.select :project_id, Project.all.pluck(:name, :id) %>
+    <%= form.label :task_id %>
+    <%= form.select :task_id, Task.all.pluck(:title, :id) %>
   </div>
 
   <div class="actions">

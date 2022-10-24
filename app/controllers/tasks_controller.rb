@@ -46,10 +46,12 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+    authorize! @task.project, with: TaskPolicy
   end
 
   def set_project
     @project = Project.find(params[:project_id])
+    authorize! @project, with: TaskPolicy
   end
 
   def task_params
