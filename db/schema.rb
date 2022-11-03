@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_24_214954) do
+ActiveRecord::Schema.define(version: 2022_11_03_215025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2022_10_24_214954) do
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "state", default: "Not started", null: false
+    t.string "state", default: "not_started", null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 

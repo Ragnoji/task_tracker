@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_to project_task_url(@comment.task.project, @comment.task),
+      redirect_to project_task_url(@project, @comment.task),
                   notice: "Comment was successfully updated."
     else
       flash.now[:notice] = "Something went wrong. Try again."
