@@ -1,12 +1,8 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
-  before_action :set_task, only: %i[new create destroy]
+  before_action :set_task, only: %i[create destroy]
   before_action :set_project
   before_action -> { authorize! @project, with: TaskPolicy }
-
-  def new
-    @comment = Comment.new
-  end
 
   def create
     authorize! Task.find(comment_params[:task_id]).project, with: TaskPolicy
@@ -16,7 +12,7 @@ class CommentsController < ApplicationController
       redirect_to project_task_url(@task.project, @task), notice: "Comment was successfully created!"
     else
       flash.now[:notice] = "Something went wrong. Try again."
-      render :new
+      render "tasks/show"
     end
   end
 

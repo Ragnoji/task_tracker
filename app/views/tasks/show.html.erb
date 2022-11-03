@@ -26,9 +26,11 @@
 <%= link_to 'Edit', edit_project_task_path(@task.project, @task) %> |
 <%= link_to 'Back', project_tasks_path(@task.project) %>
 
-<h1>Comments</h1>
+<h1>Write Comment</h1>
 
-<%= link_to 'New comment', new_project_task_comment_path(@project, @task) %>
+<%= render 'comments/form', comment: @comment, task: @task, project: @task.project %>
+
+<h1>Comments</h1>
 
 <table>
   <tbody>
