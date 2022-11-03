@@ -32,7 +32,6 @@ class ProjectsController < ApplicationController
     if @project.save && @project_membership.save
       redirect_to @project, notice: "Project was successfully created."
     else
-      @project.destroy
       flash.now[:alert] = "Something went wrong. Try again."
       render :new
     end
