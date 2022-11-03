@@ -12,9 +12,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    authorize! Project.find(task_params[:project_id]), with: TaskPolicy
-
     @task = Task.new(task_params)
+    @task.project_id = @project
     @task.deadline_at = 7.days.after
 
     if @task.save
@@ -38,8 +37,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    authorize! Project.find(task_params[:project_id]), with: TaskPolicy
-
     if @task.update(task_params)
       redirect_to project_task_url(@task.project, @task), notice: "Task was successfully updated."
     else
@@ -59,6 +56,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :deadline_at, :project_id)
+    params.require(:task).permit(:title, :description, :deadline_at)
   end
 end

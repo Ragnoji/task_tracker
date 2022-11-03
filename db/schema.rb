@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(version: 2022_10_24_214954) do
   create_table "comments", force: :cascade do |t|
     t.string "text"
     t.bigint "task_id", null: false
+    t.bigint "author_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["task_id"], name: "index_comments_on_task_id"
   end
 
@@ -64,5 +66,6 @@ ActiveRecord::Schema.define(version: 2022_10_24_214954) do
   end
 
   add_foreign_key "comments", "tasks"
+  add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "tasks", "projects"
 end

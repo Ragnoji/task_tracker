@@ -24,16 +24,11 @@ class ProjectPolicy < ApplicationPolicy
   def update?
     return false if user.nil?
 
-    return true if user.role.eql? "superadmin"
-
-    permission = ProjectMembership.find_by(project: record, user: user)
-    permission.present? && %w[owner member].include?(permission.role)
+    ProjectMembership.find_by(project: record, user: user).present?
   end
 
   def destroy?
     return false if user.nil?
-
-    return true if user.role.eql? "superadmin"
 
     ProjectMembership.find_by(project: record, user: user, role: "owner").present?
   end

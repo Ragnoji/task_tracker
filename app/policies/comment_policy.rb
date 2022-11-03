@@ -1,23 +1,11 @@
-class TaskPolicy < ApplicationPolicy
+class CommentPolicy < ApplicationPolicy
   authorize :user
-
-  def index?
-    member?
-  end
-
-  def new?
-    member?
-  end
 
   def create?
     member?
   end
 
   def destroy?
-    member?
-  end
-
-  def show?
     member?
   end
 

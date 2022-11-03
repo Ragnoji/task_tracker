@@ -2,11 +2,12 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
   before_action :set_task, only: %i[create destroy]
   before_action :set_project
-  before_action -> { authorize! @project, with: TaskPolicy }
+  before_action -> { authorize! @project, with: CommentPolicy }
 
   def create
-    authorize! Task.find(comment_params[:task_id]).project, with: TaskPolicy
     @comment = Comment.new(comment_params)
+    @comment.task = @task
+    @comment.author_id = current_user.id
 
     if @comment.save
       redirect_to project_task_url(@task.project, @task), notice: "Comment was successfully created!"
@@ -25,7 +26,6 @@ class CommentsController < ApplicationController
   end
 
   def update
-    authorize! Task.find(comment_params[:task_id]).project, with: TaskPolicy
     if @comment.update(comment_params)
       redirect_to project_task_url(@comment.task.project, @comment.task),
                   notice: "Comment was successfully updated."
@@ -50,6 +50,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text, :task_id)
+    params.require(:comment).permit(:text)
   end
 end

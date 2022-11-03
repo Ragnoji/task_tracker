@@ -26,11 +26,6 @@
     <%= form.datetime_select :deadline_at %>
   </div>
 
-  <div class="field">
-    <%= form.label :project_id %>
-    <%= form.select :project_id, Project.all.pluck(:name, :id) %>
-  </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
