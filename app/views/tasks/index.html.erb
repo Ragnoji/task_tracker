@@ -22,7 +22,6 @@
       <td><%= task.created_at %></td>
       <td><%= task.deadline_at %></td>
       <td><%= task.project.name %></td>
-      <td><%= link_to 'Comments', project_task_comments_path(@project, task) %></td>
       <td><%= link_to 'Show', url_for([@project, task]) %></td>
       <td><%= link_to 'Edit', edit_project_task_path(@project, task) %></td>
       <td><%= link_to 'Destroy', url_for([@project, task]), method: :delete, data: { confirm: 'Are you sure?' } %></td>

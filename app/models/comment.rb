@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
   belongs_to :task
 
-  validates :title, presence: true
+  validates :text, presence: true
 end

@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  before_action :set_project, only: %i[new index create destroy]
+  before_action :set_project
+  before_action -> { authorize! @project, with: TaskPolicy }
 
   def index
     @tasks = @project.tasks
@@ -11,6 +12,8 @@ class TasksController < ApplicationController
   end
 
   def create
+    authorize! Project.find(task_params[:project_id]), with: TaskPolicy
+
     @task = Task.new(task_params)
     @task.deadline_at = 7.days.after
 
@@ -34,6 +37,8 @@ class TasksController < ApplicationController
   end
 
   def update
+    authorize! Project.find(task_params[:project_id]), with: TaskPolicy
+
     if @task.update(task_params)
       redirect_to project_task_url(@task.project, @task), notice: "Task was successfully updated."
     else
@@ -46,12 +51,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
-    authorize! @task.project, with: TaskPolicy
   end
 
   def set_project
     @project = Project.find(params[:project_id])
-    authorize! @project, with: TaskPolicy
   end
 
   def task_params

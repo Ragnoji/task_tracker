@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   extend Enumerize
 
-  STATES = ["Not started", "Started", "Finished"].freeze
+  STATES = %i["Not started" Started Finished].freeze
 
   enumerize :state, in: STATES
 

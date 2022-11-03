@@ -25,3 +25,23 @@
 
 <%= link_to 'Edit', edit_project_task_path(@task.project, @task) %> |
 <%= link_to 'Back', project_tasks_path(@task.project) %>
+
+<h1>Comments</h1>
+
+<%= link_to 'New comment', new_project_task_comment_path(@project, @task) %>
+
+<table>
+  <tbody>
+  <% @task.comments.each do |comment| %>
+    <tr>
+      <td><%= comment.text %></td>
+      <td><%= comment.created_at %></td>
+      <td><%= link_to 'Edit', edit_project_task_comment_path(@project, @task, comment) %></td>
+      <td><%= link_to 'Destroy', project_task_comment_path(@project, @task, comment),
+                      method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

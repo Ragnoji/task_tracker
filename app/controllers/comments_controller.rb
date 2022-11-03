@@ -1,20 +1,19 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[show edit update destroy]
-  before_action :set_task, only: %i[new index create destroy]
-
-  def index
-    @comments = @task.comments
-  end
+  before_action :set_comment, only: %i[edit update destroy]
+  before_action :set_task, only: %i[new create destroy]
+  before_action :set_project
+  before_action -> { authorize! @project, with: TaskPolicy }
 
   def new
     @comment = Comment.new
   end
 
   def create
+    authorize! Task.find(comment_params[:task_id]).project, with: TaskPolicy
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      redirect_to project_task_comment_url(@task.project, @task, @comment), notice: "Comment was successfully created!"
+      redirect_to project_task_url(@task.project, @task), notice: "Comment was successfully created!"
     else
       flash.now[:notice] = "Something went wrong. Try again."
       render :new
@@ -23,18 +22,16 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to @task, notice: "Comment was successfully destroyed."
-  end
-
-  def show
+    redirect_to project_task_url(@project, @task), notice: "Comment was successfully destroyed."
   end
 
   def edit
   end
 
   def update
+    authorize! Task.find(comment_params[:task_id]).project, with: TaskPolicy
     if @comment.update(comment_params)
-      redirect_to project_task_comment_url(@comment.task.project, @comment.task, @comment),
+      redirect_to project_task_url(@comment.task.project, @comment.task),
                   notice: "Comment was successfully updated."
     else
       flash.now[:notice] = "Something went wrong. Try again."
@@ -46,18 +43,17 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
-    @task = @comment.task
-    @project = @task.project
-    authorize! @project, with: TaskPolicy
   end
 
   def set_task
     @task = Task.find(params[:task_id])
-    @project = @task.project
-    authorize! @project, with: TaskPolicy
+  end
+
+  def set_project
+    @project = Project.find(params[:project_id])
   end
 
   def comment_params
-    params.require(:comment).permit(:title, :description, :task_id)
+    params.require(:comment).permit(:text, :task_id)
   end
 end
