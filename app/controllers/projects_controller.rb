@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show edit update destroy]
-  before_action -> { authorize! Project }, only: %i[index show new create]
+  before_action -> { authorize! Project }, only: %i[index new create show]
+  before_action -> { authorize! @project }, only: %i[edit update destroy]
 
   # GET /projects
   def index
@@ -21,7 +22,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    authorize! @project
   end
 
   # POST /projects
@@ -40,8 +40,6 @@ class ProjectsController < ApplicationController
 
   # PATCH/PUT /projects/1
   def update
-    authorize! @project
-
     if @project.update(project_params)
       redirect_to @project, notice: "Project was successfully updated."
     else
@@ -51,8 +49,6 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
-    authorize! @project
-
     @project.destroy
     redirect_to projects_url, notice: "Project was successfully destroyed."
   end
