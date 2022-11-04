@@ -1,12 +1,10 @@
 class TaskPolicy < ApplicationPolicy
-  authorize :user
-
   def index?
     member?
   end
 
   def new?
-    member?
+    create?
   end
 
   def create?
@@ -22,7 +20,7 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def edit?
-    member?
+    update?
   end
 
   def update?
@@ -30,6 +28,9 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def member?
-    user.present? && ProjectMembership.find_by(project: record, user: user).present?
+    return false if user.nil?
+
+    membership = ProjectMembership.find_by(project: record.project, user: user)
+    membership.present? && (membership.owner? || membership.member?)
   end
 end

@@ -1,6 +1,4 @@
 class CommentPolicy < ApplicationPolicy
-  authorize :user
-
   def create?
     member?
   end
@@ -18,6 +16,9 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def member?
-    user.present? && ProjectMembership.find_by(project: record, user: user).present?
+    return false if user.nil?
+
+    membership = ProjectMembership.find_by(project: record.task.project, user: user)
+    membership.present? && (membership.member? || membership.owner?)
   end
 end

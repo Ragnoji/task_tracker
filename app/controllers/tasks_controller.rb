@@ -1,23 +1,26 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
   before_action :set_project
-  before_action -> { authorize! @project, with: TaskPolicy }
+  before_action -> { authorize! @task }, only: %i[show edit update destroy]
 
   def index
+    @task = Task.new(project: @project)
+    authorize! @task
+
     @tasks = @project.tasks
   end
 
   def new
-    @task = Task.new
+    @task = Task.new(project: @project)
+    authorize! @task
   end
 
   def create
-    @task = Task.new(task_params)
-    @task.project_id = @project
-    @task.deadline_at = 7.days.after
+    @task = Task.new(task_params.merge({ project: @project, deadline_at: 7.days.after }))
+    authorize! @task
 
     if @task.save
-      redirect_to project_task_url(@project, @task), notice: "Task was successfully created!"
+      redirect_to project_task_path(@project, @task), notice: "Task was successfully created!"
     else
       flash.now[:notice] = "Something went wrong. Try again."
       render :new
@@ -38,7 +41,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to project_task_url(@task.project, @task), notice: "Task was successfully updated."
+      redirect_to project_task_path(@project, @task), notice: "Task was successfully updated."
     else
       flash.now[:notice] = "Something went wrong. Try again."
       render :edit

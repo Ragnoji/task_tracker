@@ -17,13 +17,13 @@ ActiveRecord::Schema.define(version: 2022_11_03_215025) do
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.string "text"
+    t.string "content"
     t.bigint "task_id", null: false
-    t.bigint "author_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["task_id"], name: "index_comments_on_task_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "project_memberships", force: :cascade do |t|
@@ -66,6 +66,6 @@ ActiveRecord::Schema.define(version: 2022_11_03_215025) do
   end
 
   add_foreign_key "comments", "tasks"
-  add_foreign_key "comments", "users", column: "author_id"
+  add_foreign_key "comments", "users"
   add_foreign_key "tasks", "projects"
 end

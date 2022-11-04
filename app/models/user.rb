@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   extend Enumerize
 
-  ROLES = %i[member admin].freeze
+  ROLES = %i[member admin superadmin].freeze
 
   has_secure_password
 
