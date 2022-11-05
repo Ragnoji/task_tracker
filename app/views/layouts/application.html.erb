@@ -17,7 +17,7 @@
             [current_user.first_name, current_user.last_name].compact.join(' ').presence || current_user.email,
             sessions_path
           ) %>
-      <%= link_to 'Log out', sessions_logout_path, method: :post %>
+      <%= link_to 'Log out', sessions_path, method: :delete %>
     <% else %>
       <%= link_to 'Sign in', new_sessions_path %>
       <%= link_to 'Sign up', new_user_path %>

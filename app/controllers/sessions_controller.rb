@@ -25,11 +25,9 @@ class SessionsController < ApplicationController
   def destroy
     if current_user.present?
       session.delete(:current_user_id)
-      redirect_to root_path
+      redirect_to root_path, notice: "Successfully logged out"
     else
-      @user = User.new
-      flash.now[:notice] = "You can't log out unless you are authenticated"
-      render :new
+      redirect_to new_sessions_path, notice: "You can't log out unless you are authenticated"
     end
   end
 
