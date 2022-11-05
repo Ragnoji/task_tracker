@@ -1,6 +1,4 @@
 class TaskPolicy < ApplicationPolicy
-  authorize :user, allow_nil: true
-
   def index?
     member?
   end
@@ -30,6 +28,6 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def member?
-    user.present? && ProjectMembership.find_by(project: record.project, user: user).present?
+    ProjectMembership.find_by(project: record.project, user: user).present?
   end
 end
