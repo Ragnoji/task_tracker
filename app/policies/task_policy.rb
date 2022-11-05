@@ -27,6 +27,8 @@ class TaskPolicy < ApplicationPolicy
     member?
   end
 
+  private
+
   def member?
     ProjectMembership.find_by(project: record.project, user: user).present?
   end

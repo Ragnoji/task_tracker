@@ -29,6 +29,8 @@ class ProjectPolicy < ApplicationPolicy
     user.present? && owner?
   end
 
+  private
+
   def member?
     ProjectMembership.find_by(project: record, user: user).present?
   end
