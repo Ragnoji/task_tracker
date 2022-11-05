@@ -17,10 +17,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.merge({ project: @project }))
+    @task = Task.new(project: @project)
     authorize! @task
 
-    if @task.save
+    @task = create_task.task
+
+    if create_task.success?
       redirect_to project_task_path(@project, @task), notice: "Task was successfully created!"
     else
       flash.now[:notice] = "Something went wrong. Try again."
@@ -51,6 +53,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def create_task
+    @create_task ||= Tasks::Create.call(task_params: task_params, project: @project)
+  end
 
   def set_task
     @task = Task.find(params[:id])

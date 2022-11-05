@@ -4,4 +4,14 @@ class ProjectMailer < ApplicationMailer
 
     mail(to: user.email)
   end
+
+  def project_updated(project)
+    @project = project
+
+    mail(to: project.users.map(&:email))
+  end
+
+  def project_destroyed(project)
+    mail(to: project.users.map(&:email))
+  end
 end
