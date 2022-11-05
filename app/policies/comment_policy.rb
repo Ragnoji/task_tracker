@@ -18,7 +18,6 @@ class CommentPolicy < ApplicationPolicy
   def member?
     return false if user.nil?
 
-    membership = ProjectMembership.find_by(project: record.task.project, user: user)
-    membership.present? && (membership.member? || membership.owner?)
+    ProjectMembership.find_by(project: record.task.project, user: user).present?
   end
 end

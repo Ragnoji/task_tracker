@@ -29,9 +29,14 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return false if user.nil?
+    user.present? && owner?
+  end
 
-    membership = ProjectMembership.find_by(project: record, user: user)
-    membership.present? && membership.owner?
+  def member?
+    ProjectMembership.find_by(project: record, user: user).present?
+  end
+
+  def owner?
+    ProjectMembership.find_by(project: record, role: :owner, user: user).present?
   end
 end
