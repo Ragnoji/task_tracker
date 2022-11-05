@@ -26,10 +26,9 @@ class ProjectsController < ApplicationController
 
   # POST /projects
   def create
-    @project = Project.new(project_params)
-    @project_membership = ProjectMembership.new(project_membership_params)
+    @project = create_project.project
 
-    if @project.save && @project_membership.save
+    if create_project.success?
       redirect_to @project, notice: "Project was successfully created."
     else
       flash.now[:alert] = "Something went wrong. Try again."
@@ -54,6 +53,11 @@ class ProjectsController < ApplicationController
 
   private
 
+  def create_project
+    @create_project ||=
+      Projects::Create.call(project_params: project_params, user: current_user)
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_project
     @project = Project.find(params[:id])
@@ -62,13 +66,5 @@ class ProjectsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def project_params
     params.require(:project).permit(:name, :description)
-  end
-
-  def project_membership_params
-    {
-      project: @project,
-      user: current_user,
-      role: :owner
-    }
   end
 end
