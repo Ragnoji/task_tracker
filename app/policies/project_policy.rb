@@ -22,10 +22,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
-    return false if user.nil?
-
-    membership = ProjectMembership.find_by(project: record, user: user)
-    membership.present? && (membership.member? || membership.owner?)
+    user.present? && member?
   end
 
   def destroy?
