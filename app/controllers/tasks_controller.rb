@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.merge({ project: @project, deadline_at: 7.days.after }))
+    @task = Task.new(task_params.merge({ project: @project }))
     authorize! @task
 
     if @task.save
@@ -34,6 +34,7 @@ class TasksController < ApplicationController
 
   def show
     @comment = Comment.new
+    @comments = @task.comments
   end
 
   def edit
