@@ -1,9 +1,5 @@
 module Comments
   class Update
-    include Interactor::Organizer
-
-    organize Tasks::Update
-
     include Interactor
 
     delegate :comment, :comment_params, to: :context

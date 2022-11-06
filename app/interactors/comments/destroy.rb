@@ -1,9 +1,5 @@
 module Comments
   class Destroy
-    include Interactor::Organizer
-
-    organize Comments::Destroy
-
     include Interactor
 
     delegate :comment, to: :context
