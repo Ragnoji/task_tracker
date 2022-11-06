@@ -12,6 +12,8 @@ class ProjectMailer < ApplicationMailer
   end
 
   def project_destroyed(project)
+    @project = project
+
     mail(to: project.users.map(&:email))
   end
 end

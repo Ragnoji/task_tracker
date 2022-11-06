@@ -49,7 +49,11 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
-    redirect_to projects_path, notice: "Project was successfully destroyed." if destroy_project.success?
+    if destroy_project.success?
+      redirect_to projects_path, notice: "Project was successfully destroyed."
+    else
+      redirect_to projects_path, notice: "Failed to destroy project"
+    end
   end
 
   private
