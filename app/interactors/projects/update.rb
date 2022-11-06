@@ -1,10 +1,5 @@
 module Projects
   class Update
-    include Interactor::Organizer
-
-    organize Projects::Update,
-             Projects::Update::SendNotification
-
     include Interactor
 
     delegate :project, :project_params, to: :context

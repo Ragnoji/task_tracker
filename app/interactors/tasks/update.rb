@@ -1,9 +1,5 @@
 module Tasks
   class Update
-    include Interactor::Organizer
-
-    organize Tasks::Update, Tasks::Update::SendNotification
-
     include Interactor
 
     delegate :task, :task_params, to: :context

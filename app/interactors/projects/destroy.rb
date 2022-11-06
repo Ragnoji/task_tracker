@@ -1,10 +1,5 @@
 module Projects
   class Destroy
-    include Interactor::Organizer
-
-    organize Projects::Destroy,
-             Projects::Destroy::SendNotification
-
     include Interactor
 
     delegate :project, to: :context
