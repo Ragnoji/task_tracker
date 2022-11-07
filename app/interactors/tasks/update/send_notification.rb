@@ -6,7 +6,6 @@ module Tasks
       delegate :project, :task, to: :context
 
       def call
-        print 1
         mail_members.deliver_later
       end
 
