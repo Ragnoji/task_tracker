@@ -1,5 +1,3 @@
-@import 'variables';
-
 .alert.label-list {
   color: $dark-red;
   margin-bottom: 0;
@@ -25,4 +23,21 @@
       box-shadow: 0 0 0 .25rem $dark-blue;
     }
   }
+
+
+.task-card {
+  width: 24rem;
+}
+
+.content {
+  margin: 1rem;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-margin {
+  margin-bottom: 1rem;
 }
