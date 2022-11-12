@@ -11,7 +11,7 @@ module Comments
     private
 
     def prepared_params
-      @prepared_params ||= comment_params.merge({ task: task, user: user })
+      comment_params.merge({ task: task, user: user })
     end
   end
 end

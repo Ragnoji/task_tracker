@@ -59,7 +59,7 @@ class TasksController < ApplicationController
   end
 
   def update_task
-    @update_task ||= Tasks::UpdateOrganize.call(task_params: task_params, task: @task, project: @project)
+    @update_task ||= Tasks::Update.call(task_params: task_params, task: @task, project: @project)
   end
 
   def destroy_task

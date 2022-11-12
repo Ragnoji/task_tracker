@@ -5,7 +5,7 @@ module Comments
     delegate :comment, :comment_params, to: :context
 
     def call
-      context.fail(error: "Invalid Data") unless comment.update(comment_params)
+      context.fail!(error: "Invalid Data") unless comment.update(comment_params)
     end
   end
 end

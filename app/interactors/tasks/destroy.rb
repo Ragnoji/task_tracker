@@ -1,11 +1,13 @@
 module Tasks
   class Destroy
-    include Interactor
+    class Execute
+      include Interactor
 
-    delegate :task, to: :context
+      delegate :task, to: :context
 
-    def call
-      context.fail(error: "Invalid Data") unless task.destroy
+      def call
+        context.fail(error: "Invalid Data") unless task.destroy
+      end
     end
   end
 end

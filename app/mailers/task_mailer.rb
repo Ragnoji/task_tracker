@@ -3,21 +3,21 @@ class TaskMailer < ApplicationMailer
     @project = project
     @task = task
 
-    mail(to: ProjectMembership.where(role: :member, project: project).map { |p| p.user.email })
+    mail(to: project.users.where(project_memberships: { role: :member }).pluck(:email))
   end
 
   def task_created_to_owner(project, task)
     @project = project
     @task = task
 
-    mail(to: ProjectMembership.find_by(role: :owner, project: project).user.email)
+    mail(to: project.users.where(project_memberships: { role: :owner }).pluck(:email))
   end
 
   def task_updated(project, task)
     @project = project
     @task = task
 
-    mail(to: project.users.map(&:email))
+    mail(to: project.users.pluck(:email))
   end
 
   def task_destroyed_to_initiator(project, task, user)
@@ -27,21 +27,18 @@ class TaskMailer < ApplicationMailer
     mail(to: user.email)
   end
 
-  def task_destroyed_to_owner(project, task, user)
+  def task_destroyed_to_owner(project, task)
     @project = project
     @task = task
-    @user = user
 
-    mail(to: ProjectMembership.find_by(role: :owner, project: project).user.email)
+    mail(to: project.users.where(project_memberships: { role: :owner }).pluck(:email))
   end
 
   def task_destroyed_to_members(project, task, user)
     @project = project
     @task = task
-    @user = user
 
-    recipients = ProjectMembership.where(role: :member, project: project)
-                                  .filter_map { |p| p.user.email unless p.user.eql? user }
+    recipients = project.users.where(project_memberships: { role: :member }).where.not(id: user).pluck(:email)
 
     mail(to: recipients)
   end

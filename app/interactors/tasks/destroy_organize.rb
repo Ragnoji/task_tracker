@@ -1,7 +1,8 @@
 module Tasks
-  class DestroyOrganize
+  class Destroy
     include Interactor::Organizer
 
-    organize Tasks::Destroy, Tasks::Destroy::SendNotification
+    organize Tasks::Destroy::Execute,
+             Tasks::Destroy::SendNotification
   end
 end

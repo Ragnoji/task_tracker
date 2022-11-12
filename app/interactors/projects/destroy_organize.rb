@@ -1,8 +1,8 @@
 module Projects
-  class DestroyOrganize
+  class Destroy
     include Interactor::Organizer
 
-    organize Projects::Destroy,
+    organize Projects::Destroy::Execute,
              Projects::Destroy::SendNotification
   end
 end

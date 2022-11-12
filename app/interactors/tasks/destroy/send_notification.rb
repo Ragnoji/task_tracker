@@ -14,7 +14,7 @@ module Tasks
       private
 
       def mail_owner
-        @mail_owner ||= TaskMailer.task_destroyed_to_owner(project, task, user)
+        @mail_owner ||= TaskMailer.task_destroyed_to_owner(project, task)
       end
 
       def mail_members
