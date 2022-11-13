@@ -6,13 +6,7 @@ module Tasks
       delegate :project, :task, to: :context
 
       def call
-        mail_members.deliver_later
-      end
-
-      private
-
-      def mail_members
-        @mail_members ||= TaskMailer.task_updated(project, task)
+        TaskMailer.task_updated(project, task).deliver_later
       end
     end
   end

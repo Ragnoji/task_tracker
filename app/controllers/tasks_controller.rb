@@ -3,20 +3,16 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
   before_action :set_project
   before_action -> { authorize! @task }, only: %i[show edit update destroy]
+  before_action -> { authorize! Task.new(project: @project) }, only: %i[index new create]
 
   def index
-    authorize! Task.new(project: @project)
-
     @tasks = @project.tasks
   end
 
   def new
-    authorize! Task.new(project: @project)
   end
 
   def create
-    authorize! Task.new(project: @project)
-
     @task = create_task.task
     if create_task.success?
       redirect_to project_task_path(@project, @task), notice: "Task was successfully created!"

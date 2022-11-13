@@ -11,7 +11,7 @@ module Tasks
     private
 
     def prepared_params
-      @prepared_params ||= task_params.merge({ project: project })
+      task_params.merge({ project: project })
     end
   end
 end
