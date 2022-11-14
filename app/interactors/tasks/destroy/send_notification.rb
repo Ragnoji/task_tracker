@@ -6,7 +6,7 @@ module Tasks
       delegate :project, :task, :user, to: :context
 
       def call
-        mail_owner.deliver_later unless ProjectMembership.find_by(project: project, user: user).owner?
+        mail_owner.deliver_later unless initiator_is_owner?
         TaskMailer.task_destroyed_to_initiator(project, task, user).deliver_later
         TaskMailer.task_destroyed_to_members(project, task, user).deliver_later
       end
@@ -15,6 +15,10 @@ module Tasks
 
       def mail_owner
         TaskMailer.task_destroyed_to_owner(project, task)
+      end
+
+      def initiator_is_owner?
+        ProjectMembership.find_by(project: project, user: user).owner?
       end
     end
   end
