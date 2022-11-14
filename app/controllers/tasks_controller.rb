@@ -17,7 +17,6 @@ class TasksController < ApplicationController
     if create_task.success?
       redirect_to project_task_path(@project, @task), notice: "Task was successfully created!"
     else
-      flash.now[:notice] = "Something went wrong. Try again."
       render :new
     end
   end
@@ -43,7 +42,6 @@ class TasksController < ApplicationController
     if update_task.success?
       redirect_to project_task_path(@project, @task), notice: "Task was successfully updated."
     else
-      flash.now[:notice] = "Something went wrong. Try again."
       render :edit
     end
   end
