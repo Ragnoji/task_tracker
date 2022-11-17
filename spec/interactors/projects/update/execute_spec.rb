@@ -12,12 +12,7 @@ describe Projects::Update::Execute do
     end
 
     context "when the project was updated" do
-      it do
-        interactor.run
-
-        expect(project.name).to eq(params[:name])
-        expect(project.description).to eq(params[:description])
-      end
+      it { expect { interactor.run }.to change(project, :updated_at) }
     end
 
     context "when the project wasn't updated" do
