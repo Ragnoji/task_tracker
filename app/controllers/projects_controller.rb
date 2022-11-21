@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
   end
 
   # POST /projects
-  def create # rubocop:disable Metrics/MethodLength
+  def create # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     @project = create_project.project
 
     if create_project.success?
