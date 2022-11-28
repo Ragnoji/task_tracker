@@ -1,12 +1,12 @@
 module Tasks
-  class Update
-    class SendNotification
+  class Destroy
+    class Execute
       include Interactor
 
       delegate :task, to: :context
 
       def call
-        TaskMailer.task_updated(task.project, task).deliver_later
+        context.fail!(error: "Invalid Data") unless task.destroy
       end
     end
   end
