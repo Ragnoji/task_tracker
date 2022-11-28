@@ -3,9 +3,10 @@ module Tasks
     class SendNotification
       include Interactor
 
-      delegate :project, :task, to: :context
+      delegate :task, to: :context
 
       def call
+        context.project = task.project
         TaskMailer.task_created_to_owner(project, task).deliver_later
         TaskMailer.task_created_to_members(project, task).deliver_later
       end

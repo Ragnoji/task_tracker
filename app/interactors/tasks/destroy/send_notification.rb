@@ -3,9 +3,10 @@ module Tasks
     class SendNotification
       include Interactor
 
-      delegate :project, :task, :user, to: :context
+      delegate :task, :user, to: :context
 
       def call
+        context.project = task.project
         mail_owner.deliver_later unless initiator_is_owner?
         TaskMailer.task_destroyed_to_initiator(project, task, user).deliver_later
         TaskMailer.task_destroyed_to_members(project, task, user).deliver_later
