@@ -9,7 +9,9 @@ module Mutations
     def resolve(input:)
       comment_params = input.to_h.except(:id)
       comment = Comment.find(input.id)
-      result = Comments::Update.call(comment: comment, comment_params: comment_params, user: current_user)
+      return { errors: [{ message: "Not authorized", backtrace: [] }] } unless comment.user.eql? current_user
+
+      result = Comments::Update.call(comment: comment, comment_params: comment_params)
 
       if result.success?
         result.to_h.merge(errors: [])
