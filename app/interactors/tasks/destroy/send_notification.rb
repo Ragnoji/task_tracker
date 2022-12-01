@@ -4,6 +4,7 @@ module Tasks
       include Interactor
 
       delegate :task, :user, to: :context
+      delegate :project, to: :task
 
       def call
         mail_owner.deliver_later unless initiator_is_owner?
@@ -19,10 +20,6 @@ module Tasks
 
       def initiator_is_owner?
         ProjectMembership.find_by(project: project, user: user).owner?
-      end
-
-      def project
-        task.project
       end
     end
   end
