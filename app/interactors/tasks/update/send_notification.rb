@@ -4,15 +4,10 @@ module Tasks
       include Interactor
 
       delegate :task, to: :context
+      delegate :project, to: :task
 
       def call
         TaskMailer.task_updated(project, task).deliver_later
-      end
-
-      private
-
-      def project
-        task.project
       end
     end
   end
