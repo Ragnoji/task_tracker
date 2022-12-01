@@ -7,17 +7,12 @@ module Mutations
     type Types::Payloads::UpdateCommentPayload
 
     def resolve(input:)
-      comment_params = input.to_h.except(:id)
-      comment = Comment.find(input.id)
-      return { errors: [{ message: "Not authorized", backtrace: [] }] } unless comment.user.eql? current_user
+      comment_params = input.to_h.except(:comment_id)
+      comment = Comment.find(input.comment_id)
 
       result = Comments::Update.call(comment: comment, comment_params: comment_params)
 
-      if result.success?
-        result.to_h.merge(errors: [])
-      else
-        result.to_h.merge(errors: formatted_errors(result.project))
-      end
+      result.to_h.merge(errors: formatted_errors(result.comment))
     end
   end
 end
