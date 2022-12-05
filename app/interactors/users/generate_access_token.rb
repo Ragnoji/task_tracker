@@ -1,5 +1,5 @@
 module Users
-  class AccessToken
+  class GenerateAccessToken
     include Interactor
 
     delegate :user, to: :context

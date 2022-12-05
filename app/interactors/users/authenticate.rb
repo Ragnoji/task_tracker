@@ -3,6 +3,6 @@ module Users
     include Interactor::Organizer
 
     organize Users::Authenticate::Execute,
-             Users::AccessToken
+             Users::GenerateAccessToken
   end
 end
