@@ -12,11 +12,7 @@ module Mutations
       task_params = input.to_h.except(:task_id)
       result = Tasks::Update.call(task: task, task_params: task_params, user: current_user)
 
-      if result.success?
-        result
-      else
-        result.to_h.merge(errors: formatted_errors(result.task))
-      end
+      result.to_h.merge(errors: formatted_errors(result.task))
     end
   end
 end
