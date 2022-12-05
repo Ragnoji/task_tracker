@@ -5,7 +5,7 @@ module Mutations
     type Types::Payloads::SignInPayload
 
     def resolve(input:)
-      Users::Authenticate.call(credentials: input.to_h).to_h
+      Users::Create.call(credentials: input.to_h).to_h
     end
   end
 end

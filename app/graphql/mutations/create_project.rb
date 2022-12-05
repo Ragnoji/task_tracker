@@ -7,7 +7,7 @@ module Mutations
     type Types::Payloads::CreateProjectPayload
 
     def resolve(input:)
-      result = Projects::Create.call(project_params: input.to_h, user: current_user)
+      result = Projects::Authenticate.call(project_params: input.to_h, user: current_user)
 
       result.to_h.merge(errors: formatted_errors(result.project))
     end
