@@ -1,7 +1,7 @@
 require "rails_helper"
 
-describe Users::CheckCredentials do
-  describe ".call" do
+describe Users::CheckCredentials do  # rubocop:disable Metrics/BlockLength
+  describe ".call" do  # rubocop:disable Metrics/BlockLength
     let!(:user) { create :user }
     let(:interactor) { described_class.new(credentials: credentials) }
 
@@ -20,11 +20,10 @@ describe Users::CheckCredentials do
       end
     end
 
-    context "when params are invalid" do # когда не передано имя
+    context "when params are invalid" do
       let(:credentials) do
         {
-          email: user.email,
-          password: "123"
+          email: user.email
         }
       end
 
