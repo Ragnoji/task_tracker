@@ -16,23 +16,36 @@ describe Users::CheckCredentials do  # rubocop:disable Metrics/BlockLength
       it "is successful" do
         interactor.run
 
-        expect(interactor.context).to be_success
+        expect(interactor.context.user).to be_present
       end
     end
 
-    context "when params are invalid" do
+    context "when password wasn't passed" do
       let(:credentials) do
         {
           email: user.email
         }
       end
 
-      let(:expected_error_message) { "Wrong credentials" }
+      it "throws error" do
+        interactor.run
+
+        expect(interactor.context.errors).not_to be_empty
+      end
+    end
+
+    context "when email is invalid" do
+      let(:credentials) do
+        {
+          email: "blabla@gmail.com",
+          password: user.password
+        }
+      end
 
       it "throws error" do
         interactor.run
 
-        expect(interactor.context.errors.first[:message]).to eq(expected_error_message)
+        expect(interactor.context.errors).not_to be_empty
       end
     end
   end

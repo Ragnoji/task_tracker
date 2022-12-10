@@ -6,8 +6,6 @@ module Users
 
     def call
       context.fail! unless user.update(user_params)
-
-      context.user = user
     end
 
     private

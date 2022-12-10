@@ -2,7 +2,7 @@ module Users
   class GenerateAccessToken
     include Interactor
 
-    delegate :user, to: :context
+    delegate :user, to: :context, allow_nil: false
 
     def call
       context.access_token = access_token
