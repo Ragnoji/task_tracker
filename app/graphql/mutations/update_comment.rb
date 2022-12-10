@@ -1,7 +1,5 @@
 module Mutations
   class UpdateComment < BaseMutation
-    include GraphqlErrors
-
     argument :input, Types::Inputs::UpdateCommentInput, required: true
 
     type Types::Payloads::UpdateCommentPayload
