@@ -2,10 +2,10 @@ module Users
   class Destroy
     include Interactor
 
-    delegate :user, to: :context
+    delegate :user, to: :context, allow_nil: false
 
     def call
-      context.fail!(error: "Invalid Data") unless user.destroy
+      user.destroy
     end
   end
 end
