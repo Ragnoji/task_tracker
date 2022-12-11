@@ -13,7 +13,7 @@ module Users
     private
 
     def errors
-      [{ message: "Wrong credentials" }]
+      [{ message: "Passed user is nil" }]
     end
 
     def access_token

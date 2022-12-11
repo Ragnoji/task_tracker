@@ -5,9 +5,9 @@ module Users
     delegate :user_params, to: :context
 
     def call
-      context.fail! unless user.update(user_params)
-
       context.user = user
+
+      context.fail! unless user.update(user_params)
     end
 
     private
