@@ -1,7 +1,5 @@
 module Mutations
   class DestroyUser < BaseMutation
-    include GraphqlErrors
-
     type Types::Payloads::DestroyUserPayload
 
     def resolve

@@ -2,7 +2,7 @@ module Users
   class Destroy
     include Interactor
 
-    delegate :user, to: :context, allow_nil: false
+    delegate :user, to: :context
 
     def call
       user.destroy
