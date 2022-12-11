@@ -2,13 +2,19 @@ module Users
   class GenerateAccessToken
     include Interactor
 
-    delegate :user, to: :context, allow_nil: false
+    delegate :user, to: :context
 
     def call
+      context.fail!(errors: errors) if user.blank?
+
       context.access_token = access_token
     end
 
     private
+
+    def errors
+      [{ message: "Wrong credentials" }]
+    end
 
     def access_token
       JWT.encode(payload, jwt_secret, "HS256")

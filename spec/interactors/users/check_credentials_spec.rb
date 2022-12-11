@@ -16,7 +16,7 @@ describe Users::CheckCredentials do  # rubocop:disable Metrics/BlockLength
       it "is successful" do
         interactor.run
 
-        expect(interactor.context.user).to be_present
+        expect(interactor.context.user).to eq(user)
       end
     end
 
@@ -30,7 +30,7 @@ describe Users::CheckCredentials do  # rubocop:disable Metrics/BlockLength
       it "throws error" do
         interactor.run
 
-        expect(interactor.context.errors).not_to be_empty
+        expect(interactor.context.errors).to eq([{ message: "Wrong credentials" }])
       end
     end
 
