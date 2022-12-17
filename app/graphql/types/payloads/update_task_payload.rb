@@ -1,7 +1,7 @@
 module Types
   module Payloads
-    class CreateProjectPayload < Types::BaseObject
-      field :project, ProjectType, null: false
+    class UpdateTaskPayload < Types::BaseObject
+      field :task, TaskType, null: false
       field :errors, [Types::UserError], null: false
     end
   end
