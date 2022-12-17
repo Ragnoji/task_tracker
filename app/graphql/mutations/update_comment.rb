@@ -1,5 +1,7 @@
 module Mutations
   class UpdateComment < BaseMutation
+    include AuthenticableGraphqlUser
+
     argument :input, Types::Inputs::UpdateCommentInput, required: true
 
     type Types::Payloads::UpdateCommentPayload
