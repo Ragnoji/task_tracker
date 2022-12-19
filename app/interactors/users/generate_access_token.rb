@@ -13,7 +13,7 @@ module Users
     private
 
     def errors
-      [{ message: "Passed user is nil" }]
+      [{ message: "Error occured during generation of token" }]
     end
 
     def access_token

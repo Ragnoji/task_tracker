@@ -7,8 +7,7 @@ describe Users::GenerateAccessToken do
     context "when params are valid" do
       let(:user) { create :user }
 
-      ENV["JWT_SECRET"] = "rspec"
-      let(:expected_access_token) { JWT.encode({ sub: user.id }, "rspec", "HS256") }
+      let(:expected_access_token) { JWT.encode({ sub: user.id }, ENV["JWT_SECRET"], "HS256") }
 
       it "is successful" do
         interactor.run
@@ -20,12 +19,10 @@ describe Users::GenerateAccessToken do
     context "when user wasn't sent" do
       let(:user) { nil }
 
-      ENV["JWT_SECRET"] = "rspec"
-
       it "throws error" do
         interactor.run
 
-        expect(interactor.context.errors).to eq([{ message: "Passed user is nil" }])
+        expect(interactor.context.errors).to eq([{ message: "Error occured during generation of token" }])
       end
     end
   end
