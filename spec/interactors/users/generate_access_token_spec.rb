@@ -7,7 +7,7 @@ describe Users::GenerateAccessToken do
     context "when params are valid" do
       let(:user) { create :user }
 
-      let(:expected_access_token) { JWT.encode({ sub: user.id }, ENV["JWT_SECRET"], "HS256") }
+      let(:expected_access_token) { JWT.encode({ sub: user.id }, ENV.fetch("JWT_SECRET"), "HS256") }
 
       it "is successful" do
         interactor.run
