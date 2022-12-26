@@ -6,9 +6,9 @@ module Api
 
       def index
         @tasks = @project.tasks
-                           .order(params[:sort])
-                           .page(params[:page])
-                           .per(5)
+                         .order(params[:sort])
+                         .page(params[:page])
+                         .per(5)
 
         render json: { tasks: @tasks }
       end
